@@ -1,0 +1,4 @@
+Mahlet Zemedie
+
+Estimation time to finish the assignment : 30 Fibonacci number 
+Actual time to finish the assignment: 20 hours

@@ -1,0 +1,3 @@
+grade: 8.5
+- 1: artifical faults are not equal to real faults; more work is needed
+- 4: did not figure out a specific estimation

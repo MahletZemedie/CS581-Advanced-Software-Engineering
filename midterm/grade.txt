@@ -1,0 +1,45 @@
+Midterm grade
+- total: 78/100
+
+1A: 3/5 
+- must discuss use of Object
+1B: 1/3 
+- must address use of new Java language features
+1C: 9/10 
+- later version on p4 is a very different version with different issues; this
+  answer should be for this specific version; 
+
+2A: 2/4 
+- must just describe one bug, not three
+2B: 9/10 
+- loose coupling does not necessarily mean DIP is satisfied
+
+3A: 4/4 
+- nice unit tests, but not minimal
+3B: 3/3 
+3C: 1/3 
+- read closer about purpose of high_water_mark
+3D: 7/10 
+- weak explanations for Monitorable_Stack, mostly copied from prior
+  but Monitorable_Stack is different; e.g., LSP does not have to do with
+  List and Stack anymore
+  
+4A: 1/3 
+- not about assertions, it is about the boundary limit
+4B: 2/4 
+- your answer is the mechanics, but not the issue
+4C: 4/6 
+- needs more explanation to see how this works
+
+5A: 3/3 
+5B: 2/4 
+- no coverage of Monitorable_Stack
+5C: 3/3 
+5D: 3/3 
+5E: 4/4 
+5F: 8/8 
+
+6:  9/10 
+- getters and setters become part of the public black box API
+
+

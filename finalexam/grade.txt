@@ -1,0 +1,55 @@
+TOTAL: 91
+
+22 [25pts] I. OBL_UNSATISFIED_OBLIGATION
+ 3 [4pts] 1. Implement in ASM
+   - explanation sounds like using ASM to _fix_ the bug, not
+     just detect it
+ 4 [4pts] 2. Importance for real code
+ 4 [4pts] 3. Catchable in testing
+ 3 [3pts] 4. Sound [if no warning, then really doesn't exist]
+ 3 [3pts] 5. Complete [if warning, then really exists]
+ 3 [4pts] 6. OpenJML static checking
+   - but may create an assertion that checks resource status
+ 2 [3pts] 7. OpenJML runtime checking
+   - with assertion in the same code, garbage collector 
+     won't be activated until after the code
+  
+22 [25pts] II. IS2_INCONSISTENT_SYNC
+ 4 [4pts] 1. Implement in ASM
+ 4 [4pts] 2. Importance for real code
+ 4 [4pts] 3. Catchable in testing
+ 3 [3pts] 4. Sound [if no warning, then really doesn't exist]
+ 1 [3pts] 5. Complete [if warning, then really exists]
+   - description says it can give false positives
+ 4 [4pts] 6. OpenJML static checking
+   - ESCJava yes, but OpenJML does not implement it, yet
+ 2 [3pts] 7. OpenJML runtime checking
+   - but has same issue with testing, must cause concurrent
+     access at runtime
+  
+24 [25pts] IIIa. SBSC_USE_STRINGBUFFER_CONCATENATION
+ 4 [4pts] 1. Implement in ASM
+ 4 [4pts] 2. Importance for real code
+ 4 [4pts] 3. Catchable in testing
+ 2 [3pts] 4. Sound [if no warning, then really doesn't exist]
+   - answer does not say whether sound or not; code could
+     be mixed in with other things
+ 3 [3pts] 5. Complete [if warning, then really exists]
+ 4 [4pts] 6. OpenJML static checking
+ 3 [3pts] 7. OpenJML runtime checking
+  
+23 [25pts] IV. RANGE_ARRAY_INDEX
+ 4 [4pts] 1. Implement in ASM
+ 4 [4pts] 2. Importance for real code
+ 3 [4pts] 3. Catchable in testing
+   - this is not really much of a multi-threaded issue; hard
+     to imagine depending on multi-threaded index value
+     creation
+ 3 [3pts] 4. Sound [if no warning, then really doesn't exist]
+ 3 [3pts] 5. Complete [if warning, then really exists]
+ 4 [4pts] 6. OpenJML static checking
+ 2 [3pts] 7. OpenJML runtime checking
+   - but the out of bounds exception would have already
+     occurred, no?
+
+  

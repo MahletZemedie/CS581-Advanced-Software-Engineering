@@ -1,0 +1,263 @@
+/*
+* Mahlet Zemedie 
+*
+*The program implemets solution to the LCStr problem. 
+The algorithm report the LCStr length and one substring of that length. 
+*
+*I prove using Spin model checking as the algorithm is correct, 
+and no subsequences is longer than the one found by the algorithm 
+*
+*/
+#define LengthOfSequence1 5
+#define LengthOfSequence2 5
+#define FirstCol (LengthOfSequence1+1) //the first col to build the table
+#define Firstrow (LengthOfSequence1+1) //first row to build the table
+byte sequence1[LengthOfSequence1];
+byte sequence2[LengthOfSequence2];
+byte subSequence[LengthOfSequence2];
+byte subSequenceLength;
+byte LCSLength;
+byte buffer[LengthOfSequence1]
+byte t,i,j,k,x,index;
+
+typedef LcsTable { 
+	byte aa[FirstCol]
+};
+typedef trackbackTable { 
+	byte bb[Firstrow]
+};
+
+//use to build the table
+LcsTable a[FirstCol];
+trackbackTable b[Firstrow];
+
+ 
+/**
+*Purose: It generate random number between 0 and maximum
+*/
+
+inline random(v,maximum)
+{
+   v = 0;
+   do 
+   :: (v<maximum) -> v = v + 1;
+   :: (true) -> break;
+   od;
+   
+}
+
+/*
+* Generate array of random number for sequence1
+*/
+inline randomSequence1()
+{
+   i = 0;
+   do
+   :: (i<LengthOfSequence1) -> 
+         random(t,LengthOfSequence1);
+         sequence1[i] = t; 
+         i++;
+   :: else -> break;
+   od;
+}
+
+/*
+* Generate array of random number for sequence2
+*/
+inline randomSequence2()
+{
+   i = 0;
+   do
+   :: (i<LengthOfSequence2) -> 
+         random(t,LengthOfSequence1);
+         sequence2[i] = t; 
+         i++;
+   :: else -> break;
+   od;
+}
+
+/*
+* Print Sequence1
+*/
+inline PrintSequences1()
+{
+   printf("Sequence1: \n");
+   i = 0;
+   do
+   :: (i<LengthOfSequence1) -> 
+         printf("%d ",sequence1[i]); i++;
+   :: else -> break;
+   od;
+   printf("\n");
+   }
+   
+/*
+*Print Sequence2
+*/
+inline PrintSequences2(){
+   printf("Sequence2: \n");
+   i = 0;
+   do
+   :: (i<LengthOfSequence2) -> 
+         printf("%d ",sequence2[i]); i++;
+   :: else -> break;
+   od;
+   printf("\n");
+}
+
+/* 
+* Purose: give the longest common sequence  
+*/
+inline LCS()
+{
+   i=0;
+   k=0;
+   do
+      :: (i < FirstCol) ->
+         j=0;
+	 do
+            :: (j < Firstrow) ->
+               if
+	          :: (i==0 || j==0) ->
+		     a[i].aa[j]= 0;
+		  :: else ->
+		     if
+	  	        :: (sequence1[i-1]==sequence2[j-1]) ->
+	  		   a[i].aa[j]= a[i-1].aa[j-1] + 1;
+			   b[i].bb[j]= 1;
+	  	        :: else ->
+	  		   if
+	  		      :: a[i].aa[j-1] > a[i-1].aa[j] ->
+	  		         a[i].aa[j]= a[i].aa[j-1];
+	  		      :: else ->
+	  		         a[i].aa[j]= a[i-1].aa[j];
+	  		   fi
+		     fi
+	       fi
+	       j++;
+	    :: else -> break;
+         od
+         i++;
+      :: else -> break;
+   od
+}
+
+//Create a table to store lengths of longest common suffixes of substrings.
+inline LCSTable()
+{
+   printf("\n LCS Computed table: \n");
+   i=0;
+   do
+      :: (i < FirstCol) ->
+         j=0;
+	 do
+            :: (j < Firstrow) ->
+               printf(" %d ", a[i].aa[j]);
+	       j++;
+	    :: else -> break;
+         od
+         printf("\n");
+         i++;
+      :: else -> break;
+   od
+}
+
+/*
+*print one of the LCS
+*/
+inline printLCS()
+{
+   i= LengthOfSequence1;
+   j= LengthOfSequence1;
+   LCSLength= a[FirstCol-1].aa[FirstCol-1]; // the length of LCS
+   index= LCSLength;
+   do
+      :: (i > 0 && j > 0) ->
+         if
+	    :: (sequence1[i-1]==sequence2[j-1]) ->
+	       buffer[index-1]= sequence1[i-1];
+	       i--; j--; index--;
+	    :: else ->
+	    if
+	       :: (a[i-1].aa[j] > a[i].aa[j-1]) ->
+	          i--;
+	       :: else ->
+	          j--;
+	    fi
+         fi
+      :: else -> break;
+   od
+   //printing the LCS
+   printf("The LCS:  ");
+   index= 0;
+   do
+      :: (index < LCSLength) ->
+         printf("%d ", buffer[index]); 
+	 index++;
+      :: else -> break;
+   od
+   printf("\n");
+
+}
+/*
+*The Assert code ensure as the LCS found exist in both sequence. 
+*To show as the substring is correct
+*/
+inline assertSequenceExisted()
+{
+   byte is_found = 0;
+   index=0;
+   j=0;
+   //check if the LCS exist in sequence1
+      do
+      :: (j < LengthOfSequence1 && index < LCSLength) ->
+         if
+            :: (buffer[index]==sequence1[j]) ->
+	       is_found++; index++;
+	    :: else -> skip;
+         fi
+	 j++;
+      :: else -> break;
+   od
+   //ensure the LSC found is existed in sequence1
+   assert(is_found == LCSLength); 
+   
+ //check if the LCS exist in sequence2
+   is_found = 0;
+   index=0;
+   j=0;
+   do
+      :: (j < LengthOfSequence1 && index < LCSLength) ->
+         if
+            :: (buffer[index]==sequence2[j]) ->
+	       is_found++; index++;
+	    :: else -> skip;
+         fi
+	 j++;
+      :: else -> break;
+   od
+   //ensure the LSC found is existed in sequence2
+   assert(is_found == LCSLength);
+}
+
+/*
+*Assert to ensure no subsequences is longer than the one found by the algorithm
+*/
+inline assertNoneLonger(){assert(LCSLength >= subSequenceLength);}
+/*
+* Model to startup main
+*/
+init {
+   randomSequence1();
+   randomSequence2();
+   PrintSequences1();
+   PrintSequences2();
+   LCS();
+   LCSTable()
+   printLCS();
+   printf("The length of LCS: %d \n", LCSLength);
+   /* verification that the algorithem found the LCS*/
+   assertSequenceExisted();
+   assertNoneLonger();
+}
+

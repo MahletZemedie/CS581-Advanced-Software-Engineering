@@ -1,0 +1,26 @@
+grade: 17
+- code still has 6 warnings under openjml -esc
+- warnings are the main output of -esc, they are not like compiler 
+  warnings, they are the main output that you must resolve
+- output I get from your code:
+> java -jar $OJ -esc JmlHomework.java 
+JmlHomework.java:83: warning: The prover cannot establish an assertion (Postcondition: JmlHomework.java:71: ) in method find
+   return false;
+   ^
+JmlHomework.java:71: warning: Associated declaration: JmlHomework.java:83: 
+   ensures \result == false==> 
+   ^
+JmlHomework.java:36: warning: The prover cannot establish an assertion (Postcondition: JmlHomework.java:27: ) in method limit
+      return absCutoff;
+      ^
+JmlHomework.java:27: warning: Associated declaration: JmlHomework.java:36: 
+/*@ ensures \result == a ==> (a>=0 && a< absCutoff) | (a<0 && a> -absCutoff);
+    ^
+JmlHomework.java:16: warning: The prover cannot establish an assertion (Postcondition: JmlHomework.java:8: ) in method max
+      return a;
+      ^
+JmlHomework.java:8: warning: Associated declaration: JmlHomework.java:16: 
+/*@ ensures \result == a ==> (a>b); 
+    ^
+6 warnings
+

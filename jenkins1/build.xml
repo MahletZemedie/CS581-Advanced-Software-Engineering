@@ -1,0 +1,28 @@
+<!-- Sample Ant build file for-->
+<project name="Test1" default="compile">
+
+   <!-- property to allow ant to find junit -->
+
+   <!-- standard compile task, but turn debugging on for source viewing -->
+   <target name="compile" description="compile the source">
+      <javac srcdir="." includeantruntime="false" debug="true"/>
+   </target>
+
+   <!-- standard run task -->
+   <target name="run" description="run Test1" depends="compile">
+	<echo message="Print the reverse of a string"/>
+      <java classname="Test1" fork="yes">
+         <arg value="Hello"/><arg value="java"/><arg value="World"/>
+      </java>
+   </target>
+
+   
+        
+   <!-- clean up by removing all generated files; do "ant clean" to start afresh -->
+   <target name="clean" depends  = "compile">
+      <delete>
+         <fileset dir="." includes="*.class"/>
+      </delete>
+   </target>
+
+</project>

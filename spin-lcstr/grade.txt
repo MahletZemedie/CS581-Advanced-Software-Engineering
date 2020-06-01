@@ -1,0 +1,5 @@
+grade: 14
+- documentation only shows a failed verification, it does not show a
+  correct verification
+- verification for no longer common substring was not implemented;
+  variable subStringLength is never set
